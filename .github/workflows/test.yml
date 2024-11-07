@@ -20,5 +20,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
-        run: pytest --cov=app test_app.py  # Run tests with coverage
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=app --cov-report=xml  # Generate coverage report in XML format
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2  # Change to version v2
+        with:
+          token: ${{ '4dab9134-9b38-4b81-99d9-05a6559d4217' }}  
