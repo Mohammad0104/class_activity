@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, 3.10]
 
     steps:
       - name: Checkout code
@@ -13,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: ${{ matrix.python-version }}  # Use matrix version
 
       - name: Install dependencies
         run: |
@@ -27,4 +30,4 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2  # Change to version v2
         with:
-          token: ${{ '4dab9134-9b38-4b81-99d9-05a6559d4217' }}  
+          token: ${{ '4dab9134-9b38-4b81-99d9-05a6559d4217' }}  # Use the secret token from GitHub Secrets
